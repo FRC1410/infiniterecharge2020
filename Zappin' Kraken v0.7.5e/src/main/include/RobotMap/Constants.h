@@ -2,6 +2,12 @@
 
 constexpr double pi = 3.141592653589793;
 
+constexpr int intSize = 4;
+constexpr int floatSize = 4;
+constexpr int doubleSize = 8;
+constexpr int charSize = 1;
+constexpr int stringSize = 8;
+
 //Controllers
 constexpr double kDriverJoystickDeadzone = 0.1;   //Joystick Deadzone
 constexpr double kDriverTriggerThreshold = 0.1;   //Minimum Trigger Value

@@ -25,6 +25,7 @@ class OI {
     frc::JoystickButton ShoveTest{&driver_controller, 5};
 
     frc::JoystickButton LimelightTest{&driver_controller, 6};
+    frc::JoystickButton DebouncedLimelightTest{&test_controller, 1};
 
   public:
     OI();
