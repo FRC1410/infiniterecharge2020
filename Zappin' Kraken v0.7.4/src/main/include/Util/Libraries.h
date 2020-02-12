@@ -25,6 +25,10 @@
 #include <frc/SpeedControllerGroup.h>
 #include <frc/Drive/DifferentialDrive.h>
 
+#include "networktables/NetworkTable.h"
+#include "networktables/NetworkTableEntry.h"
+#include "networktables/NetworkTableInstance.h"
+
 #include <ctre/Phoenix.h>
 #include <rev/CANSparkMax.h>
 #include <rev/ColorSensorV3.h>

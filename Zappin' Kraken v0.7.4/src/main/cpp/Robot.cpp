@@ -14,6 +14,15 @@ ControlPanel Robot::m_control_panel;
 Limelight Robot::m_limelight;
 
 void Robot::RobotInit() {
+  //Network table initiation
+  auto instance = nt::NetworkTableInstance::GetDefault();
+  auto table = instance.GetTable("Dashboard Data");
+  //Network table data
+  target_RPM_entry = table->GetEntry("Target RPM");
+  gotten_target_RPM_entry = table->GetEntry("Gotten Target RPM");
+  real_RPM_entry = table->GetEntry("Real RPM");
+  estimated_distance_entry = table->GetEntry("Estimated Distance");
+
   Robot::m_intake_flipper.SetDesiredPosition(false);
 
   m_chooser.SetDefaultOption("Do nothing", nullptr);
@@ -25,10 +34,16 @@ void Robot::RobotInit() {
 
 void Robot::RobotPeriodic() {
   m_drivetrain.IncrementXZ();
-  frc::SmartDashboard::PutNumber("Gotten Target RPM", frc::SmartDashboard::GetNumber("Target RPM", kShooterRPMProfiles[2]));
-  frc::SmartDashboard::PutNumber("Real RPM", m_shooter.GetRPM());
-  frc::SmartDashboard::PutNumber("Estimated Distance", m_limelight.GetDistance());
-  frc::SmartDashboard::PutNumber("Gyro Angle", m_drivetrain.GetAngle());
+  target_RPM_entry.SetDouble(kShooterRPMProfiles[2]);
+  gotten_target_RPM_entry.SetDouble(1);
+  real_RPM_entry.SetDouble(m_shooter.GetRPM());
+  estimated_distance_entry.SetDouble(m_limelight.GetDistance());
+  
+  //frc::SmartDashboard::PutNumber("Gotten Target RPM", frc::SmartDashboard::GetNumber("Target RPM", kShooterRPMProfiles[2]));
+  //frc::SmartDashboard::PutNumber("Real RPM", m_shooter.GetRPM());
+  //frc::SmartDashboard::PutNumber("Estimated Distance", m_limelight.GetDistance());
+  //frc::SmartDashboard::PutNumber("Gyro Angle", m_drivetrain.GetAngle());
+  
 }
 
 void Robot::DisabledInit() {

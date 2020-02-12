@@ -39,6 +39,11 @@ class Robot : public frc::TimedRobot {
     static ControlPanel m_control_panel;
     static Limelight m_limelight;
 
+    nt::NetworkTableEntry target_RPM_entry;
+    nt::NetworkTableEntry gotten_target_RPM_entry;
+    nt::NetworkTableEntry real_RPM_entry;
+    nt::NetworkTableEntry estimated_distance_entry;
+
     void RobotInit() override;
     void RobotPeriodic() override;
     void DisabledInit() override;
