@@ -16,7 +16,8 @@ constexpr double kSingleRumbleStrength = 1;
 constexpr double kSingleRumbleTime = 0.254;       //Seconds
 
 //Intake Flipper
-constexpr double kIntakeFlipperStartingAngle = 0; //Degrees to vertical
+constexpr double kIntakeFlipperStartingAngle = -9; //Degrees to vertical
+constexpr double kIntakeFlipperGearRatio = ((double) 1/5) * ((double) 1/5);
 
 constexpr double kIntakeSpringXOffset = 0;        //Inches behind rotation point
 constexpr double kIntakeSpringYOffset = 0;        //Inches above rotation point

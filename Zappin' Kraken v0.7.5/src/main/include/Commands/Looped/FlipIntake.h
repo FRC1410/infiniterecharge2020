@@ -4,7 +4,9 @@
 
 class FlipIntake : public frc::Command {
   private:
+    frc::Timer m_timer;
     double angle, spring_angle, force_compensation;
+    bool position_flipped, previous_position;
 
   public:
     FlipIntake();

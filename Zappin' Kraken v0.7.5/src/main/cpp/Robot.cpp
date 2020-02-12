@@ -29,6 +29,7 @@ void Robot::RobotPeriodic() {
   frc::SmartDashboard::PutNumber("Real RPM", m_shooter.GetRPM());
   frc::SmartDashboard::PutNumber("Estimated Distance", m_limelight.GetDistance());
   frc::SmartDashboard::PutNumber("Gyro Angle", m_drivetrain.GetAngle());
+  frc::SmartDashboard::PutNumber("Angle", m_intake_flipper.GetAngle());
 }
 
 void Robot::DisabledInit() {
@@ -72,6 +73,8 @@ void Robot::TeleopInit() {
     m_autonomous_command = nullptr;
   }
   m_limelight.ForceLightsOn();
+  m_intake_flipper.ResetAngle();
+  m_intake_flipper.SetDesiredPosition(false);
 }
 
 void Robot::TeleopPeriodic() {

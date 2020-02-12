@@ -22,7 +22,7 @@ class OI {
     frc::POVButton ElevatorLowerButton{operator_controller, kElevatorLowerPOVAngle, kPOVNumber};
 
     frc::JoystickButton ShooterTest{&driver_controller, 6};
-    frc::JoystickButton ShoveTest{&driver_controller, 5};
+    frc::JoystickButton ShoveTest{&driver_controller, 54};
 
     frc::JoystickButton LimelightTest{&driver_controller, 6};
 

@@ -26,17 +26,18 @@ constexpr double kIntakeSpeedAdjustment = 1;
 //Intake Flipper
 constexpr double kNEOTicksToDegrees = (double) 360 / 4096;
 
-constexpr double kIntakeFlipperDownSpeed = 0.07;
-constexpr double kIntakeFlipperUpSpeed = -0.15;
+constexpr double kIntakeFlipperDownSpeed = 0.15;
+constexpr double kIntakeFlipperUpSpeed = -0.23;
+constexpr double kIntakeFlipperUpDelay = 0;               //Seconds
 
 constexpr double kIntakeFlipperDownPowerCap = 0.2;
 constexpr double kIntakeFlipperUpPowerCap = -0.2;
 
-constexpr double kIntakeDownTarget = 125;                   //Degrees
-constexpr double kIntakeUpTarget = -10;                     //Degrees
+constexpr double kIntakeDownThreshold = 105;                //Degrees
+constexpr double kIntakeUpThreshold = -5;                   //Degrees
 
-constexpr double kIntakeDownThreshold = 115;                //Degrees
-constexpr double kIntakeUpThreshold = 0;                    //Degrees
+constexpr double kIntakeDownTarget = 115;                   //Degrees
+constexpr double kIntakeUpTarget = -5;                      //Degrees
 
 constexpr double intake_flipper_kP = 0;
 constexpr double intake_flipper_kI = 0;

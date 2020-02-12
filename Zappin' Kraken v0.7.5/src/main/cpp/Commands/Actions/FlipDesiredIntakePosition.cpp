@@ -1,9 +1,7 @@
 #include "Commands/Actions/FlipDesiredIntakePosition.h"
 #include "Robot.h"
 
-FlipDesiredIntakePosition::FlipDesiredIntakePosition() {
-  Requires(&Robot::m_intake_flipper);
-}
+FlipDesiredIntakePosition::FlipDesiredIntakePosition() {}
 
 void FlipDesiredIntakePosition::Initialize() {
   Robot::m_intake_flipper.SetDesiredPosition(!Robot::m_intake_flipper.GetDesiredPosition());

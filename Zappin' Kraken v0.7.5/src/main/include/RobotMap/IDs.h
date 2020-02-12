@@ -16,7 +16,7 @@ constexpr int kDrivetrainRightMotor2 = 4;          //Talon FX
 constexpr int kLeftDriveAxis = 1;                  //Driver Left Stick Y-axis
 constexpr int kRightDriveAxis = 5;                 //Driver Right Stick Y-axis
 
-constexpr int kInvertDrivingButton = 54;            //Driver Left Bumper
+constexpr int kInvertDrivingButton = 5;            //Driver Left Bumper
 
 //Intake
 constexpr int kIntakeMotor = 10;                   //Talon SRX

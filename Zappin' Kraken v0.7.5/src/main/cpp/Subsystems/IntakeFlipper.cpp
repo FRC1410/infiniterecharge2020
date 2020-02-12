@@ -20,18 +20,20 @@ void IntakeFlipper::InitDefaultCommand() {
 
 void IntakeFlipper::SetSpeed(double speed) {
   m_flipper.Set(speed);
+  frc::SmartDashboard::PutNumber("Flipper Power", speed);
 }
 
+
 void IntakeFlipper::ResetAngle() {
-  m_encoder.SetPosition(kIntakeFlipperStartingAngle / kNEOTicksToDegrees);
+  m_encoder.SetPosition(kIntakeFlipperStartingAngle / (360 * kIntakeFlipperGearRatio));
 }
 
 double IntakeFlipper::GetAngle() {
-  return (m_encoder.GetPosition() * kNEOTicksToDegrees);
+  return (m_encoder.GetPosition() * 360 * kIntakeFlipperGearRatio);
 }
 
 void IntakeFlipper::SetDesiredPosition(bool position) {
-  down = false;
+  down = position;
 }
 
 bool IntakeFlipper::GetDesiredPosition() {
