@@ -83,6 +83,9 @@ constexpr double kLimelightAngleFinishedThreshold = 4;      //+- degrees
 
 constexpr double kLimelightDistanceModifier = 0.95;
 
+constexpr int LimelightDistanceIndex = 5;
+constexpr int LimelightAngleIndex = 5;
+
 constexpr double limelight_angle_kP = 0.02;
 constexpr double limelight_angle_kI = 0;
 constexpr double limelight_angle_kD = 0;

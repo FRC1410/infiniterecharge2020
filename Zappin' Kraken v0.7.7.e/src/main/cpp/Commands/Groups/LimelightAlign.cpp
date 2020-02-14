@@ -8,6 +8,6 @@
 
 LimelightAlign::LimelightAlign() {
   AddParallel(new ShooterPID(1));
-  AddSequential(new LimelightAnglePID);
-  AddSequential(new LimelightDistancePID);
+  AddSequential(new DebouncedLimelightAnglePID);
+  AddSequential(new DebouncedLimelightDistancePID);
 }

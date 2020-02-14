@@ -16,6 +16,8 @@
 
 #include "Commands/Actions/LimelightAnglePID.h"
 
+#include "Commands/Actions/ToggleElevatorBrake.h"
+
 OI::OI() {  
   //LimelightAlignButton.WhileHeld(new LimelightAlign);
 
@@ -30,6 +32,8 @@ OI::OI() {
   ShoveTest.ToggleWhenPressed(new Shoot);
 
   LimelightTest.ToggleWhenPressed(new LimelightAlign);
+
+  ElevatorBrakeButton.ToggleWhenPressed(new ToggleElevatorBrake);
 }
 
 //Driver Controller

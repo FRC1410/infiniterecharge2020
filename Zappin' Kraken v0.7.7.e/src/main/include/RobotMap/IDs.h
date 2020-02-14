@@ -48,9 +48,13 @@ constexpr int kShootButton = 5;                    //Operator Left Bumper
 //Elevator
 constexpr int kElevatorMotor = 40;                 //Spark MAX
 
+constexpr int kElevatorSolenoid = 1;               //Elevator Single Solenoid
+
 constexpr int kElevatorAxis = 1;                   //Operator Left Stick Y-Axis
 constexpr int kElevatorRaisePOVAngle = 0;          //D-pad Up
 constexpr int kElevatorLowerPOVAngle = 180;        //D-pad Down
+
+constexpr int kElevatorBrakeButton = 8;            //Operator 
 
 //Slider
 constexpr int kSliderMotor = 41;                   //Talon SRX

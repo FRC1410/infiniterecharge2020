@@ -20,6 +20,7 @@ class OI {
 
     frc::POVButton ElevatorRaiseButton{operator_controller, kElevatorRaisePOVAngle, kPOVNumber};
     frc::POVButton ElevatorLowerButton{operator_controller, kElevatorLowerPOVAngle, kPOVNumber};
+    frc::JoystickButton ElevatorBrakeButton{&operator_controller, kElevatorBrakeButton};
 
     frc::JoystickButton ShooterTest{&driver_controller, 6};
     frc::JoystickButton ShoveTest{&driver_controller, 5};
