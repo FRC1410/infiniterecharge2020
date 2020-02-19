@@ -117,6 +117,10 @@ void Robot::DisabledInit() {
   m_oi.SetDriverRumble(0);
   m_oi.SetOperatorRumble(0);
   m_oi.SetTestRumble(0);
+<<<<<<< Updated upstream
+=======
+  frc::SmartDashboard::PutNumber("Horizontal Storage Speed", kStorageFeedShooterHorizontalSpeed);
+>>>>>>> Stashed changes
   frc::SmartDashboard::PutNumber("Vertical Storage Speed", kStorageFeedShooterVerticalSpeed);
 }
 

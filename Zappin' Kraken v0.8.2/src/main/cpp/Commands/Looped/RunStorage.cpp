@@ -20,7 +20,11 @@ void RunStorage::Execute() {
   if (Robot::m_storage.GetOuterUltrasonicSensor() == true) {
     if (outer_sensor_was_read == false) {
       storage_sequence = 1;
+<<<<<<< Updated upstream
       Robot::m_storage.SetSpeed(kStorageHorizontalSpeed, frc::SmartDashboard::GetNumber("Vertical Storage Speed", kStorageFeedShooterVerticalSpeed));
+=======
+      Robot::m_storage.SetSpeed(frc::SmartDashboard::GetNumber("Horizontal Storage Speed", kStorageHorizontalSpeed), frc::SmartDashboard::GetNumber("Vertical Storage Speed", kStorageFeedShooterVerticalSpeed));
+>>>>>>> Stashed changes
       Robot::m_storage.IncrementBallCount();
     }
     outer_sensor_was_read = true;
@@ -35,7 +39,11 @@ void RunStorage::Execute() {
     outer_sensor_was_read = false;
   }
 
+<<<<<<< Updated upstream
   if (m_timer.Get() > 0.254 && follow_through == true) {
+=======
+  if (m_timer.Get() > kHorizontalStorageDelay && follow_through == true) {
+>>>>>>> Stashed changes
     follow_through = false;
     Robot::m_storage.SetSpeed(0,0);
   }

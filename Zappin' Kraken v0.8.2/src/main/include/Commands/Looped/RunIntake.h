@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Util/Libraries.h"
+#include "RobotMap/Tuning.h"
 
 class RunIntake : public frc::Command {
   public:
