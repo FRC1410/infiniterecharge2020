@@ -66,6 +66,10 @@ void Robot::RobotInit() {
 
   m_intake_flipper.ResetAngle();
   m_storage.SetManualControl(false);
+  
+  frc::SmartDashboard::PutNumber("Limelight Angle kP", limelight_sqrt_angle_kP);
+  frc::SmartDashboard::PutNumber("Limelight Angle kI", limelight_sqrt_angle_kI);
+  frc::SmartDashboard::PutNumber("Limelight Angle kD", limelight_sqrt_angle_kD);
 }
 
 void Robot::RobotPeriodic() {

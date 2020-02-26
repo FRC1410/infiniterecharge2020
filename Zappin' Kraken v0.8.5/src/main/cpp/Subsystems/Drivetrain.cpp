@@ -44,6 +44,8 @@ void Drivetrain::SetRawSpeed(double left, double right) {
 	}
 
 	m_drive.TankDrive(kLeftDriveSpeedAdjustment * left_speed, kRightDriveSpeedAdjustment * right_speed);
+	frc::SmartDashboard::PutNumber("Left Power", kLeftDriveSpeedAdjustment * left_speed);
+	frc::SmartDashboard::PutNumber("Right Power", kRightDriveSpeedAdjustment * right_speed);
 }
 
 void Drivetrain::SetCurvedSpeed(double left, double right) {

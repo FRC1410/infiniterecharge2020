@@ -26,7 +26,7 @@ void RunStorage::Execute() {
   }
 
 
-  if (Robot::m_storage.GetManualControl() == false) {
+  if (Robot::m_storage.GetManualControl() == false/* && Robot::m_storage.GetPhotoelectricSensor2() == false*/) {
     if (Robot::m_storage.GetPhotoelectricSensor() == true) {
       if (sensor_was_read == false) {
         Robot::m_storage.SetVerticalSpeed(kStorageVerticalSpeed);
@@ -41,7 +41,8 @@ void RunStorage::Execute() {
       sensor_was_read = false;
     }
   } else {
-    Robot::m_storage.SetVerticalSpeed(kStorageVerticalSpeed * Robot::m_oi.GetOperatorAxis(kOuttakeAxis));
+    Robot::m_storage.SetVerticalSpeed(0);
+    //Robot::m_storage.SetVerticalSpeed(kStorageVerticalSpeed * Robot::m_oi.GetOperatorAxis(kOuttakeAxis));
   }
 
   if ((m_timer.Get() > kStoragePhotoelectricDelay) && (follow_through == true)) {

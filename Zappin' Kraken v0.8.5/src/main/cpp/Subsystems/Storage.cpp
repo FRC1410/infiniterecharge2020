@@ -53,6 +53,10 @@ bool Storage::GetPhotoelectricSensor() {
   return m_photoelectric.Get();
 }
 
+bool Storage::GetPhotoelectricSensor2() {
+  return m_photoelectric2.Get();
+}
+
 void Storage::SetBallCount(int count) {
   ball_count = count;
 }

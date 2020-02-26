@@ -22,13 +22,18 @@ void LimelightAnglePID::Initialize() {
 }
 
 void LimelightAnglePID::Execute() {
+  /*kP = frc::SmartDashboard::GetNumber("Limelight Angle kP", limelight_sqrt_angle_kP);
+  kI = frc::SmartDashboard::GetNumber("Limelight Angle kI", limelight_sqrt_angle_kI);
+  kD = frc::SmartDashboard::GetNumber("Limelight Angle kD", limelight_sqrt_angle_kD);*/
+  //m_PID.SetConstants(limelight_sqrt_angle_kP, limelight_sqrt_angle_kI, limelight_sqrt_angle_kD);
+  //m_PID.SetConstants(kP, kI, kD);
   Robot::m_drivetrain.SetCurvedArcadeSpeed(0, -m_PID.GetPID(Robot::m_limelight.GetXAngle() / sqrt(abs(Robot::m_limelight.GetXAngle())), -kLimelightAngleOffset, m_timer.Get() - previous_timer));
   previous_timer = m_timer.Get();
   frc::SmartDashboard::PutNumber("Angle Error", Robot::m_limelight.GetXAngle() + kLimelightAngleOffset);
 }
 
 bool LimelightAnglePID::IsFinished() {
-  return false;//(abs(Robot::m_limelight.GetXAngle() + kLimelightAngleOffset) < kLimelightAngleFinishedThreshold);
+  return (abs(Robot::m_limelight.GetXAngle() + kLimelightAngleOffset) < kLimelightAngleFinishedThreshold);
 }
 
 void LimelightAnglePID::End() {
