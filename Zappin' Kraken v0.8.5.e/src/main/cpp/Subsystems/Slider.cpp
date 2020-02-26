@@ -4,7 +4,7 @@
 Slider::Slider() : Subsystem("ExampleSubsystem") {
   m_slider.ConfigFactoryDefault();
   m_slider.SetNeutralMode(NeutralMode::Brake);
-  m_slider.SetInverted(false);
+  m_slider.SetInverted(true);
 }
 
 void Slider::InitDefaultCommand() {

@@ -8,7 +8,10 @@ class IntakeFlipper : public frc::Subsystem {
     rev::CANSparkMax m_flipper{kIntakeFlipperMotor, rev::CANSparkMax::MotorType::kBrushless};
     rev::CANEncoder m_encoder = m_flipper.GetEncoder();
     rev::CANPIDController m_PID = m_flipper.GetPIDController();
-    bool down = false;
+
+    double current_speed = 0;
+    int desired_position = 0;
+    nt::NetworkTableEntry flipper_power_entry;
 
   public:
     IntakeFlipper();
@@ -16,7 +19,9 @@ class IntakeFlipper : public frc::Subsystem {
     void SetSpeed(double speed);
     void ResetAngle();
     double GetAngle();
-    void SetDesiredPosition(bool position);
-    bool GetDesiredPosition();
-    void SetPIDSpeed(double target, double kF);
+    void SetDesiredPosition(int position);
+    int GetDesiredPosition();
+    void SetPIDConstants(double kP, double kI, double kD);
+    void SetPIDSpeed(double target);
+    void Accelerate(double target_speed, double time_difference);
 };

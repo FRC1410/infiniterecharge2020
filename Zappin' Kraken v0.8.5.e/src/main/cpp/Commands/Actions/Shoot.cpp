@@ -6,19 +6,11 @@ Shoot::Shoot() {
   Requires(&Robot::m_storage);
 }
 
-void Shoot::Initialize() {
-  Robot::m_storage.UnblockShooter();
-
-  m_timer.Reset();
-  m_timer.Start();
-}
+void Shoot::Initialize() {}
 
 void Shoot::Execute() {
   Robot::m_storage.SetSpeed(kStorageFeedShooterHorizontalSpeed, kStorageFeedShooterVerticalSpeed);
-
-  if (m_timer.Get() > kBallCountResetTime) {
-    Robot::m_storage.SetBallCount(0);
-  }
+  Robot::m_storage.SetBallCount(0);
 }
 
 bool Shoot::IsFinished() {
@@ -26,7 +18,6 @@ bool Shoot::IsFinished() {
 }
 
 void Shoot::End() {
-  Robot::m_storage.BlockShooter();
   Robot::m_storage.SetSpeed(0, 0);
 }
 

@@ -13,7 +13,7 @@ class Drivetrain : public frc::Subsystem {
 
     double left_speed, right_speed;
 
-    double left_distance, right_distance, previous_distance;
+    double left_distance, right_distance, starting_distance, previous_distance;
     double starting_angle, previous_angle;
 
     double x_position, z_position, linear_displacement;
@@ -21,6 +21,8 @@ class Drivetrain : public frc::Subsystem {
   public:
     Drivetrain();
     void InitDefaultCommand() override;
+    void SetBrakeMode();
+    void SetCoastMode();
 
     void SetRawSpeed(double left, double right);
     void SetCurvedSpeed(double left, double right);

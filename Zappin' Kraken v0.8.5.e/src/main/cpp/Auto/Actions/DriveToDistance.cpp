@@ -1,31 +1,31 @@
-#include "Auto/Actions/DriveDistance.h"
+#include "Auto/Actions/DriveToDistance.h"
 #include "Robot.h"
 #include "RobotMap/Tuning.h"
 
-DriveDistance::DriveDistance(double distance_input) {
+DriveToDistance::DriveToDistance(double distance_input) {
   Requires(&Robot::m_drivetrain);
-  distance_target = distance_input;
+  distance_target1 = distance_input;
   ending_speed = 0;
   acceleration_time = -1;
 }
 
-DriveDistance::DriveDistance(double distance_input, double ending_speed_input) {
+DriveToDistance::DriveToDistance(double distance_input, double ending_speed_input) {
   Requires(&Robot::m_drivetrain);
-  distance_target = distance_input;
+  distance_target1 = distance_input;
   ending_speed = ending_speed_input;
   acceleration_time = -1;
 }
 
-DriveDistance::DriveDistance(double distance_input, double ending_speed_input, double acceleration_time_input) {
+DriveToDistance::DriveToDistance(double distance_input, double ending_speed_input, double acceleration_time_input) {
   Requires(&Robot::m_drivetrain);
-  distance_target = distance_input;
+  distance_target1 = distance_input;
   ending_speed = ending_speed_input;
   acceleration_time = acceleration_time_input;
 }
 
-void DriveDistance::Initialize() {
+void DriveToDistance::Initialize() {
   starting_distance = Robot::m_drivetrain.GetDistance();
-  distance_target += Robot::m_drivetrain.GetDistance();
+  distance_target = starting_distance + distance_target1;
   starting_speed = Robot::m_drivetrain.GetLinearCurvedSpeed();
 
   if (ending_speed == 0) {
@@ -39,7 +39,10 @@ void DriveDistance::Initialize() {
   m_timer.Start();
 }
 
-void DriveDistance::Execute() {
+void DriveToDistance::Execute() {
+  frc::SmartDashboard::PutNumber("Distance Target", distance_target);
+  frc::SmartDashboard::PutNumber("Starting Distance line", starting_distance);
+  frc::SmartDashboard::PutNumber("Drive off line error", distance_target - Robot::m_drivetrain.GetDistance());
   if (ending_speed == 0) {
     speed = m_PID.GetPID(Robot::m_drivetrain.GetDistance(), distance_target, m_timer.Get() - previous_time);
   } else if (acceleration_time >= 0) {
@@ -47,12 +50,17 @@ void DriveDistance::Execute() {
   } else {
     speed = starting_speed + ((ending_speed - starting_speed) * ((Robot::m_drivetrain.GetDistance() - starting_distance) / (distance_target - starting_distance)));
   }
+  Robot::m_drivetrain.CurvedArcadeAccelerate(speed, 0, m_timer.Get() - previous_time);
 }
 
-bool DriveDistance::IsFinished() {
+bool DriveToDistance::IsFinished() {
   return (abs(distance_target - Robot::m_drivetrain.GetDistance()) < kDistanceFinishedThreshold);
 }
 
-void DriveDistance::End() {}
+void DriveToDistance::End() {
+  Robot::m_drivetrain.SetCurvedArcadeSpeed(ending_speed, 0);
+}
 
-void DriveDistance::Interrupted() {}
+void DriveToDistance::Interrupted() {
+  End();
+}

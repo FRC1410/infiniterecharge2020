@@ -5,7 +5,7 @@
 
 class Intake : public frc::Subsystem {
   private:
-    WPI_TalonSRX m_intake{kIntakeMotor};
+    WPI_VictorSPX m_intake{kIntakeMotor};
 
   public:
     Intake();

@@ -9,7 +9,7 @@ class Storage : public frc::Subsystem {
     WPI_TalonSRX m_storage_vertical_front{kVerticalStorageFrontMotor}, m_storage_vertical_back{kVerticalStorageBackMotor};
 
     frc::DoubleSolenoid m_blocker{kStorageSolenoidStart, kStorageSolenoidEnd};
-    frc::DigitalInput m_photoelectric{kPhotoelectricPort};
+    frc::DigitalInput m_bottom_photoelectric{kBottomPhotoelectricPort}, m_top_photoelectric{kTopPhotoelectricPort};
 
     int ball_count = 0;
 
@@ -23,7 +23,8 @@ class Storage : public frc::Subsystem {
     void SetHorizontalSpeed(double speed);
     void SetVerticalSpeed(double speed);
     void SetSpeed(double horizontal_speed, double vertical_speed);
-    bool GetPhotoelectricSensor();
+    bool GetBottomPhotoelectricSensor();
+    bool GetTopPhotoelectricSensor();
     int GetBallCount();
     void IncrementBallCount();
     void SetBallCount(int interval);

@@ -49,8 +49,12 @@ void Storage::SetSpeed(double horizontal_speed, double vertical_speed) {
   vertical_power_entry.SetDouble(vertical_speed);
 }
 
-bool Storage::GetPhotoelectricSensor() {
-  return m_photoelectric.Get();
+bool Storage::GetBottomPhotoelectricSensor() {
+  return m_bottom_photoelectric.Get();
+}
+
+bool Storage::GetTopPhotoelectricSensor() {
+  return m_top_photoelectric.Get();
 }
 
 void Storage::SetBallCount(int count) {

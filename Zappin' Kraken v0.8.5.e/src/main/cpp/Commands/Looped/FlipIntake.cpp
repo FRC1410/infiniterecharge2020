@@ -10,13 +10,12 @@ FlipIntake::FlipIntake() {
 void FlipIntake::Initialize() {}
 
 void FlipIntake::Execute() {
-
   if (Robot::m_oi.GetOperatorAxis(2) != 0 || Robot::m_oi.GetOperatorAxis(3) != 0) {
     Robot::m_intake_flipper.SetDesiredPosition(kIntakeFlipperDown);
   } else {
     Robot::m_intake_flipper.SetDesiredPosition(kIntakeFlipperUp);
   }
-
+  
   switch (Robot::m_intake_flipper.GetDesiredPosition()) {
     case kIntakeFlipperUp:
       if (Robot::m_intake_flipper.GetAngle() > kIntakeUpThreshold) {
@@ -36,12 +35,6 @@ void FlipIntake::Execute() {
       }
       break;
   }
-
-  // if (Robot::m_oi.GetOperatorAxis(kIntakeAxis) != 0 || Robot::m_oi.GetOperatorAxis(kOuttakeAxis) != 0) {
-  //   Robot::m_intake_flipper.SetPIDSpeed(kIntakeDownTarget);
-  // } else {
-  //   Robot::m_intake_flipper.SetPIDSpeed(kIntakeUpTarget);
-  // }
 }
 
 bool FlipIntake::IsFinished() {

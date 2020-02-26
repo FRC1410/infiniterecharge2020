@@ -8,11 +8,10 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include "Util/Libraries.h"
 
-class ToggleElevatorBrake : public frc::Command {
+class FeedShooter : public frc::Command {
  public:
-  ToggleElevatorBrake();
+  FeedShooter();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

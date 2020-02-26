@@ -4,7 +4,7 @@
 #include "Util/PID.h"
 #include "RobotMap/Tuning.h"
 
-class DebouncedLimelightDistancePID : public frc::Command {
+class NewDebouncedLimelightDistancePID : public frc::Command {
   private:
     PID m_angle_PID;
     PID m_distance_PID;
@@ -13,9 +13,9 @@ class DebouncedLimelightDistancePID : public frc::Command {
 
     double avDist;
 
-    int bigData[LimelightDistanceIndex];
+    double bigData[LimelightDistanceIndex];
     double distHist[LimelightDistanceIndex];
-    double angleHist[LimelightAngleIndex];
+    double angleHist[5];
     double size = 0;
     double size2 = 0;
     int option = 0;
@@ -24,7 +24,7 @@ class DebouncedLimelightDistancePID : public frc::Command {
     int debounce_incrementer = 0;
 
   public:
-    DebouncedLimelightDistancePID();
+    NewDebouncedLimelightDistancePID();
     void Initialize() override;
     void Execute() override;
     bool IsFinished() override;

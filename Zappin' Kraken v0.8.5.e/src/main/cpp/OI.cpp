@@ -8,36 +8,29 @@
 
 #include "Commands/Actions/FlipDesiredIntakePosition.h"
 #include "Commands/Actions/Shoot.h"
+#include "Commands/Groups/RunShooter.h"
+
+#include "Commands/Actions/ActuateElevatorLock.h"
+#include "Commands/Actions/ElevatorPID.h"
+
 #include "Commands/Actions/ActuateControlPanel.h"
 #include "Commands/Actions/RotationControl.h"
 #include "Commands/Actions/PositionControl.h"
 
-#include "Commands/Actions/ShooterPID.h"
-
-#include "Commands/Actions/LimelightAnglePID.h"
-
-#include "Commands/Actions/ToggleElevatorBrake.h"
-
 OI::OI() {  
-  //LimelightAlignButton.WhileHeld(new LimelightAlign);
+  LimelightAlignButton.WhileHeld(new LimelightAlign);
 
   FlipDesiredIntakePositionButton.WhenPressed(new FlipDesiredIntakePosition);
   ShootButton.WhileHeld(new Shoot);
+  RunShooterButton.ToggleWhenPressed(new RunShooter(kShooterRPMProfiles[1], 2.54));
+
+  ActuateElevatorLockButton.WhenPressed(new ActuateElevatorLock);
+  ElevatorRaiseButton.WhenPressed(new ElevatorPID(kElevatorUpTarget));
+  ElevatorLowerButton.WhenPressed(new ElevatorPID(kElevatorDownTarget));
+
   ActuateControlPanelButton.WhenPressed(new ActuateControlPanel);
   RotationControlButton.ToggleWhenPressed(new RotationControl);
   PositionControlPrimaryButton.ToggleWhenPressed(new PositionControl(kControlPanelPrimaryOffset));
-<<<<<<< Updated upstream:Zappin' Kraken v0.7.7.e/src/main/cpp/OI.cpp
-  PositionControlSecondaryButton.ToggleWhenPressed(new PositionControl(kControlPanelSecondaryOffset));
-  
-  //ShooterTest.ToggleWhenPressed(new ShooterPID(0));
-  ShoveTest.ToggleWhenPressed(new Shoot);
-
-  LimelightTest.ToggleWhenPressed(new LimelightAlign);
-
-  ElevatorBrakeButton.ToggleWhenPressed(new ToggleElevatorBrake);
-=======
-
->>>>>>> Stashed changes:Zappin' Kraken v0.8.5.e/src/main/cpp/OI.cpp
 }
 
 //Driver Controller

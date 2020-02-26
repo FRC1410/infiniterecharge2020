@@ -11,11 +11,15 @@ void Limelight::ForceLightsOn() {
 }
 
 void Limelight::ForceLightsOff() {
-  limelight_table->PutNumber("ledMode", 1);
+  limelight_table->PutNumber("ledMode", 0);
 }
 
 bool Limelight::GetTarget() {
-  return limelight_table->GetBoolean("tv", false);
+  if (limelight_table->GetNumber("tv", 0) == 0) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 double Limelight::GetXAngle() {
@@ -23,12 +27,13 @@ double Limelight::GetXAngle() {
 }
 
 double Limelight::GetDistance() {
-  return ((kLimelightDistanceModifier * kTargetHeight * vertical_resolution) / (2 * tan(kLimelightVerticalFOV / 2) * limelight_table->GetNumber("tshort", 0) * cos(GetXAngle() * pi/180)));
+  raw_distance_calculation = (kTargetHeight * vertical_resolution) / (2 * tan(kLimelightVerticalFOV / 2) * limelight_table->GetNumber("tshort", 0) * cos(GetXAngle() * pi/180));
+  return (raw_distance_calculation * kLimelightDistanceMultiplier) - kLimelightDistanceOffset;
 }
 
 double Limelight::GetNearestDistanceTarget() {
   nearest = kShooterDistanceProfiles[0];
-  for (int x = 1; x < (sizeof(kShooterDistanceProfiles) / 8); x++) {
+  for (int x = 1; x < (sizeof(kShooterDistanceProfiles) / kDoubleSize); x++) {
     if (abs(GetDistance() - kShooterDistanceProfiles[x]) < abs(GetDistance() - nearest)) {
       nearest = kShooterDistanceProfiles[x];
     }
@@ -38,7 +43,7 @@ double Limelight::GetNearestDistanceTarget() {
 
 double Limelight::GetNearestRPMProfile() {
   GetNearestDistanceTarget();
-  for (int x = 0; x < (sizeof(kShooterRPMProfiles) / 8); x++) {
+  for (int x = 0; x < (sizeof(kShooterRPMProfiles) / kDoubleSize); x++) {
     if (nearest == kShooterDistanceProfiles[x]) {
       return kShooterRPMProfiles[x];
     }

@@ -7,7 +7,12 @@ LimelightAnglePID::LimelightAnglePID() {
 }
 
 void LimelightAnglePID::Initialize() {
-  m_PID.SetConstants(limelight_angle_kP, limelight_angle_kI, limelight_angle_kD);
+  auto instance = nt::NetworkTableInstance::GetDefault();
+  auto table = instance.GetTable("Dashboard Data");
+
+  angle_error_entry = table->GetEntry("Angle Error");
+
+  m_PID.SetConstants(limelight_sqrt_angle_kP, limelight_sqrt_angle_kI, limelight_sqrt_angle_kD);
   m_PID.ResetI();
   m_PID.ResetD();
 
@@ -17,7 +22,12 @@ void LimelightAnglePID::Initialize() {
 }
 
 void LimelightAnglePID::Execute() {
-  Robot::m_drivetrain.SetCurvedArcadeSpeed(0, -m_PID.GetPID(Robot::m_limelight.GetXAngle(), -kLimelightAngleOffset, m_timer.Get() - previous_timer));
+  /*kP = frc::SmartDashboard::GetNumber("Limelight Angle kP", limelight_sqrt_angle_kP);
+  kI = frc::SmartDashboard::GetNumber("Limelight Angle kI", limelight_sqrt_angle_kI);
+  kD = frc::SmartDashboard::GetNumber("Limelight Angle kD", limelight_sqrt_angle_kD);*/
+  //m_PID.SetConstants(limelight_sqrt_angle_kP, limelight_sqrt_angle_kI, limelight_sqrt_angle_kD);
+  //m_PID.SetConstants(kP, kI, kD);
+  Robot::m_drivetrain.SetCurvedArcadeSpeed(0, -m_PID.GetPID(Robot::m_limelight.GetXAngle() / sqrt(abs(Robot::m_limelight.GetXAngle())), -kLimelightAngleOffset, m_timer.Get() - previous_timer));
   previous_timer = m_timer.Get();
   frc::SmartDashboard::PutNumber("Angle Error", Robot::m_limelight.GetXAngle() + kLimelightAngleOffset);
 }
@@ -28,6 +38,7 @@ bool LimelightAnglePID::IsFinished() {
 
 void LimelightAnglePID::End() {
   Robot::m_drivetrain.SetRawSpeed(0, 0);
+  //Robot::m_limelight.ForceLightsOff();
 }
 
 void LimelightAnglePID::Interrupted() {

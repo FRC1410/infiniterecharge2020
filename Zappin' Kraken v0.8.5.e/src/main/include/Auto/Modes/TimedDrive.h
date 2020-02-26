@@ -6,6 +6,7 @@ class TimedDrive : public frc::Command {
   private:
     frc::Timer m_timer;
     double left_speed, right_speed, time;
+    nt::NetworkTableEntry yeet_entry, speed_entry, time_entry;
 
   public:
     TimedDrive();

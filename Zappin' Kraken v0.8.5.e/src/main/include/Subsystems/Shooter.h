@@ -6,6 +6,7 @@
 class Shooter : public frc::Subsystem {
   private:
     WPI_TalonFX m_shooter{kShooterMotor};
+    nt::NetworkTableEntry shooter_speed_entry;
 
   public:
     Shooter();

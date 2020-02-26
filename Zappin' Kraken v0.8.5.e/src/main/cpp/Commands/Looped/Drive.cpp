@@ -8,7 +8,7 @@ Drive::Drive() {
 }
 
 void Drive::Initialize() {
-  invert_driving_was_pressed = false;
+  invert_driving_was_pressed = Robot::m_oi.GetDriverButton(kInvertDrivingButton);
   first_timer = true;
   m_timer.Reset();
   m_timer.Start();

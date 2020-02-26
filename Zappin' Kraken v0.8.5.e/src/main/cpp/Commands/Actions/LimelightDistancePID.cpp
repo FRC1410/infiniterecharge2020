@@ -1,15 +1,12 @@
 #include "Commands/Actions/LimelightDistancePID.h"
 #include "Robot.h"
 #include "RobotMap/Tuning.h"
-#include "RobotMap/Constants.h"
 
 LimelightDistancePID::LimelightDistancePID() {
   Requires(&Robot::m_drivetrain);
 }
 
 void LimelightDistancePID::Initialize() {
-  debounce_incrementer = 0;
-
   m_angle_PID.SetConstants(limelight_angle_kP, limelight_angle_kI, limelight_angle_kD);
   m_angle_PID.ResetI();
   m_angle_PID.ResetD();
@@ -28,25 +25,20 @@ void LimelightDistancePID::Initialize() {
 void LimelightDistancePID::Execute() {
   linear_speed = -m_distance_PID.GetPID(Robot::m_limelight.GetDistance(), target_distance, m_timer.Get() - previous_timer);
   rotational_speed = -m_angle_PID.GetPID(Robot::m_limelight.GetXAngle(), -kLimelightAngleOffset, m_timer.Get() - previous_timer);
+  
+frc::SmartDashboard::PutNumber("Desired Linear Speed", linear_speed);
+
+  if (abs(linear_speed) > kLimelightLinearCap) {
+    linear_speed = kLimelightLinearCap * (abs(linear_speed) / linear_speed);
+  }
+
   Robot::m_drivetrain.SetCurvedArcadeSpeed(linear_speed, rotational_speed);
   previous_timer = m_timer.Get();
-
-  if(abs(Robot::m_limelight.GetDistance() - target_distance) < kDistanceFinishedThreshold){
-    debounce_incrementer++;
-  }else{
-    debounce_incrementer = 0;
-  } 
+  
 }
 
 bool LimelightDistancePID::IsFinished() {
-  if(debounce_incrementer >= kDebounceIncrementTik){
-    return true;
-  
-  }else{
-    return false;
-  }
-
-  //return (abs(Robot::m_limelight.GetDistance() - target_distance) < kDistanceFinishedThreshold);
+  return (abs(Robot::m_limelight.GetDistance() - target_distance) < kDistanceFinishedThreshold);
 }
 
 void LimelightDistancePID::End() {

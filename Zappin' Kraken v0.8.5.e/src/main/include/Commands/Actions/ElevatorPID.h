@@ -3,8 +3,11 @@
 #include "Util/Libraries.h"
 
 class ElevatorPID : public frc::Command {
+  private:
+    double target_height;
+
   public:
-    ElevatorPID();
+    ElevatorPID(double target);
     void Initialize() override;
     void Execute() override;
     bool IsFinished() override;

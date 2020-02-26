@@ -6,8 +6,8 @@
 constexpr double kLeftDriveSpeedAdjustment = 1;
 constexpr double kRightDriveSpeedAdjustment = 1;
 
-constexpr double kDrivetrainFrictionDeadband = 0.2;
-constexpr double kDrivetrainFrictionAmount = 1.0/3;
+constexpr double kDrivetrainFrictionDeadband = 0.05;
+constexpr double kDrivetrainFrictionAmount = 0.254;
 
 constexpr double kDrivetrainLinearAccelerationTime = 1;     //Seconds
 constexpr double kDrivetrainRotationalAccelerationTime = 1; //Seconds
@@ -52,8 +52,8 @@ constexpr double kStoragePhotoelectricDelay = 0.1;          //Seconds
 //Shooter
 constexpr double kAccelerationTime = 0.254;                 //Seconds
 
-constexpr double kShooterDistanceProfiles[] = {180, 254, 408};
-constexpr double kShooterRPMProfiles[] = {3250, 3600, 4575};
+constexpr double kShooterDistanceProfiles[] = {126, 180, 254, 408};
+constexpr double kShooterRPMProfiles[] = {3250, 3400, 3600, 4575};
 
 constexpr double shooter_kP = 0.3;
 constexpr double shooter_kI = 0;
@@ -80,25 +80,25 @@ constexpr frc::Color kBlueTarget = frc::Color(0.18, 0.46, 0.36);
 constexpr frc::Color kGreenTarget = frc::Color(0.21, 0.6, 0.26);
 
 //Limelight
-constexpr double kLimelightAngleOffset = 1;                 //Robot angle offset (degrees)
-constexpr double kLimelightAngleFinishedThreshold = 4;      //+- degrees
+constexpr double kLimelightAngleOffset = 0;                 //Robot angle offset (degrees)
+constexpr double kLimelightAngleFinishedThreshold = 2;      //+- degrees
 
 constexpr double kLimelightDistanceMultiplier = 0.95;       //Linear Regression
 constexpr double kLimelightDistanceOffset = 0;              //Linear Regression
 
 constexpr double kLimelightLinearCap = 0.4;
 
-constexpr double limelight_angle_kP = 0.015;
-constexpr double limelight_angle_kI = 0;
-constexpr double limelight_angle_kD = 0.001; //0.01 too much, 0.001 too little;
-
-constexpr double limelight_sqrt_angle_kP = 0.1;
-constexpr double limelight_sqrt_angle_kI = 0;
-constexpr double limelight_sqrt_angle_kD = 0; //0.01 too much, 0.001 too little;
-
 constexpr double limelight_distance_kP = 0.02;
 constexpr double limelight_distance_kI = 0;
 constexpr double limelight_distance_kD = 0;
+
+constexpr double limelight_angle_kP = 0.01;
+constexpr double limelight_angle_kI = 0;
+constexpr double limelight_angle_kD = 0.001;
+
+constexpr double limelight_sqrt_angle_kP = 0.06;
+constexpr double limelight_sqrt_angle_kI = 0;
+constexpr double limelight_sqrt_angle_kD = 0.005;
 
 constexpr int LimelightDistanceIndex = 10;
 constexpr int kDebounceIncrementTik = 50;

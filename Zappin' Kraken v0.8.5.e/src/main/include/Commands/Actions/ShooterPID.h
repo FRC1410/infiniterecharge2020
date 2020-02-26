@@ -4,10 +4,11 @@
 
 class ShooterPID : public frc::Command {
   private:
-    double target_RPM;
+    double target_RPM, count;
 
   public:
-    ShooterPID(double RPM_input);
+    ShooterPID();
+    ShooterPID(double target_RPM_input);
     void Initialize() override;
     void Execute() override;
     bool IsFinished() override;

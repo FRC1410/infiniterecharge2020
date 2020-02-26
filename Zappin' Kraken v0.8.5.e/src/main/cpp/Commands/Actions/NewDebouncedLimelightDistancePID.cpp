@@ -1,15 +1,14 @@
-#include "Commands/Actions/DebouncedLimelightDistancePID.h"
+#include "Commands/Actions/NewDebouncedLimelightDistancePID.h"
 #include "Robot.h"
 #include "RobotMap/Tuning.h"
 #include "RobotMap/Constants.h"
-#include <math.h>
 #include <algorithm> 
 
-DebouncedLimelightDistancePID::DebouncedLimelightDistancePID() {
+NewDebouncedLimelightDistancePID::NewDebouncedLimelightDistancePID() {
   Requires(&Robot::m_drivetrain);
 }
 
-void DebouncedLimelightDistancePID::Initialize() {
+void NewDebouncedLimelightDistancePID::Initialize() {
   m_angle_PID.SetConstants(limelight_angle_kP, limelight_angle_kI, limelight_angle_kD);
   m_angle_PID.ResetI();
   m_angle_PID.ResetD();
@@ -25,7 +24,7 @@ void DebouncedLimelightDistancePID::Initialize() {
   m_timer.Start();
 }
 
-void DebouncedLimelightDistancePID::Execute() {
+void NewDebouncedLimelightDistancePID::Execute() {
 
   std::sort(&bigData[0], &bigData[LimelightDistanceIndex]);
 
@@ -46,7 +45,7 @@ void DebouncedLimelightDistancePID::Execute() {
       data[k] = bigData[k + distUninitialized];
     }
   }
-  
+
 	std::sort(&data[0], &data[LimelightDistanceIndex - distUninitialized]);
 
   double sum = 0;
@@ -85,7 +84,7 @@ void DebouncedLimelightDistancePID::Execute() {
   } 
 }
 
-bool DebouncedLimelightDistancePID::IsFinished() {
+bool NewDebouncedLimelightDistancePID::IsFinished() {
   if(debounce_incrementer >= kDebounceIncrementTik){
     return true;
   } else {
@@ -93,10 +92,11 @@ bool DebouncedLimelightDistancePID::IsFinished() {
   }
 }
 
-void DebouncedLimelightDistancePID::End() {
+void NewDebouncedLimelightDistancePID::End() {
   Robot::m_drivetrain.SetRawSpeed(0, 0);
+  //Robot::m_limelight.ForceLightsOff();
 }
 
-void DebouncedLimelightDistancePID::Interrupted() {
+void NewDebouncedLimelightDistancePID::Interrupted() {
   End();
 }

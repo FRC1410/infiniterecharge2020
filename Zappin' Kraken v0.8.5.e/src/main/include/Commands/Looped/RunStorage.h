@@ -4,7 +4,8 @@
 
 class RunStorage : public frc::Command {
   private:
-    bool outer_sensor_was_read, inner_sensor_was_read;
+    frc::Timer m_timer;
+    bool sensor_was_read, follow_through, disabled_was_pressed;
 
   public:
     RunStorage();

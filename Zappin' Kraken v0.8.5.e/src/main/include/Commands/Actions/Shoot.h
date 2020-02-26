@@ -3,9 +3,6 @@
 #include "Util/Libraries.h"
 
 class Shoot : public frc::Command {
-  private:
-    frc::Timer m_timer;
-
   public:
     Shoot();
     void Initialize() override;

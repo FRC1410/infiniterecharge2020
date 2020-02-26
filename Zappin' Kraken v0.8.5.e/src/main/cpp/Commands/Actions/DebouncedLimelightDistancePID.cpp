@@ -31,11 +31,11 @@ void DebouncedLimelightDistancePID::Initialize() {
 }
 
 void DebouncedLimelightDistancePID::Execute() {
-  kP = frc::SmartDashboard::GetNumber("Debounced kP", limelight_distance_kP);
-  kI = frc::SmartDashboard::GetNumber("Debounced kI", limelight_distance_kI);
-  kD = frc::SmartDashboard::GetNumber("Debounced kD", limelight_distance_kD);
+  kP = frc::SmartDashboard::GetNumber("Debounced ang kP", limelight_angle_kP);
+  kI = frc::SmartDashboard::GetNumber("Debounced ang kI", limelight_angle_kI);
+  kD = frc::SmartDashboard::GetNumber("Debounced ang kD", limelight_angle_kD);
   
-  //m_distance_PID.SetConstants(kP, kI, kD);
+  m_angle_PID.SetConstants(kP, kI, kD);
 
   int distSum = 0;
   int distUninitialized = 0;
@@ -65,7 +65,7 @@ void DebouncedLimelightDistancePID::Execute() {
   Robot::m_drivetrain.SetCurvedArcadeSpeed(linear_speed, rotational_speed);
   previous_timer = m_timer.Get();
 
-  if ((abs(avDist - target_distance) < kDistanceFinishedThreshold)) {
+  if ((abs(avDist - target_distance) < kDistanceFinishedThreshold) && abs(Robot::m_limelight.GetXAngle() + kLimelightAngleOffset) < kLimelightAngleFinishedThreshold) {
     m_finished_timer.Start();
   } else {
     m_finished_timer.Reset();

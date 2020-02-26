@@ -14,4 +14,5 @@ void Intake::InitDefaultCommand() {
 
 void Intake::SetSpeed(double speed) {
   m_intake.Set(speed * kIntakeSpeedAdjustment);
+  frc::SmartDashboard::PutNumber("Intake Speed", speed * kIntakeSpeedAdjustment);
 }

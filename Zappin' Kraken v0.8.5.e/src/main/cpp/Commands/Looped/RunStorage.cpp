@@ -12,11 +12,11 @@ void RunStorage::Initialize() {
   follow_through = false;
   m_timer.Reset();
   m_timer.Start();
-  disabled_was_pressed = (Robot::m_oi.GetOperatorDPad() == 270);
+  disabled_was_pressed = Robot::m_oi.GetOperatorButton(kManualVerticalOverrideButton);
 }
 
 void RunStorage::Execute() {
-  if (Robot::m_oi.GetOperatorDPad() == 270) {
+  if (Robot::m_oi.GetOperatorButton(kManualVerticalOverrideButton) == true) {
     if (disabled_was_pressed == false) {
       Robot::m_storage.SetManualControl(!Robot::m_storage.GetManualControl());
     }
@@ -26,8 +26,8 @@ void RunStorage::Execute() {
   }
 
 
-  if (Robot::m_storage.GetManualControl() == false) {
-    if (Robot::m_storage.GetPhotoelectricSensor() == true) {
+  if (Robot::m_storage.GetManualControl() == false && Robot::m_storage.GetBottomPhotoelectricSensor() == false) {
+    if (Robot::m_storage.GetBottomPhotoelectricSensor() == true) {
       if (sensor_was_read == false) {
         Robot::m_storage.SetVerticalSpeed(kStorageVerticalSpeed);
       }
@@ -41,7 +41,8 @@ void RunStorage::Execute() {
       sensor_was_read = false;
     }
   } else {
-    Robot::m_storage.SetVerticalSpeed(kStorageVerticalSpeed * Robot::m_oi.GetOperatorAxis(kOuttakeAxis));
+    //Robot::m_storage.SetVerticalSpeed(0);
+    Robot::m_storage.SetVerticalSpeed(kStorageVerticalSpeed * Robot::m_oi.GetOperatorButton(kManualVerticalButton));
   }
 
   if ((m_timer.Get() > kStoragePhotoelectricDelay) && (follow_through == true)) {
@@ -50,7 +51,7 @@ void RunStorage::Execute() {
     Robot::m_storage.IncrementBallCount();
   }
 
-  // Robot::m_storage.SetHorizontalSpeed(kStorageHorizontalSpeed * Robot::m_oi.GetOperatorAxis(kOuttakeAxis));
+  Robot::m_storage.SetHorizontalSpeed(kStorageHorizontalSpeed * Robot::m_oi.GetOperatorAxis(kOuttakeAxis));
 }
 
 bool RunStorage::IsFinished() {

@@ -22,7 +22,7 @@ class ControlPanel : public frc::Subsystem {
     void SetSpeed(double speed);
     int GetColor();
     int GetFMSData(int offset);
-    void Raise();
+    void SetPosition(frc::DoubleSolenoid::Value position);
     void Lower();
-    bool GetPosition();
+    frc::DoubleSolenoid::Value GetPosition();
 };

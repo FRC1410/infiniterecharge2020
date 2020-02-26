@@ -3,9 +3,6 @@
 #include "Util/Libraries.h"
 
 class FlipIntake : public frc::Command {
-  private:
-    double angle, spring_angle, force_compensation;
-
   public:
     FlipIntake();
     void Initialize() override;

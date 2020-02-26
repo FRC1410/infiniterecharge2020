@@ -17,9 +17,9 @@ void PID::SetConstants(double kP_input, double kI_input, double kD_input) {
 double PID::GetPID(double current, double target, double dt) {
   error = target - current;
   P = error * kP;
-  I += error * kI;
+  I += error * kI * dt;
   if (D_ran == true) {
-    D = (error - previous_error) * kD;
+    D = (error - previous_error) * kD * dt;
   } else {
     D = 0;
   }

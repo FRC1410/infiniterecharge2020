@@ -8,6 +8,9 @@ class LimelightAnglePID : public frc::Command {
     PID m_PID;
     frc::Timer m_timer;
     double previous_timer;
+    nt::NetworkTableEntry angle_error_entry;
+
+    double kP, kI, kD;
 
   public:
     LimelightAnglePID();

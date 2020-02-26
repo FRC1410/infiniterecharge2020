@@ -5,34 +5,35 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Commands/Actions/ToggleElevatorBrake.h"
+#include "Commands/Actions/FeedShooter.h"
 #include "Robot.h"
-#include "RobotMap/Constants.h"
 #include "RobotMap/Tuning.h"
-#include "Util/Libraries.h"
 
-
-ToggleElevatorBrake::ToggleElevatorBrake() {
-  Requires(&Robot::m_elevator);
+FeedShooter::FeedShooter() {
+  Requires(&Robot::m_storage);
 }
 
 // Called just before this Command runs the first time
-void ToggleElevatorBrake::Initialize() {
-  Robot::m_elevator.Toggle();
-}
+void FeedShooter::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void ToggleElevatorBrake::Execute() {
+void FeedShooter::Execute() {
+  Robot::m_storage.SetSpeed(kStorageFeedShooterHorizontalSpeed, kStorageFeedShooterVerticalSpeed);
+  Robot::m_storage.SetBallCount(0);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ToggleElevatorBrake::IsFinished() { return false; }
+bool FeedShooter::IsFinished() {
+  return false;
+}
 
 // Called once after isFinished returns true
-void ToggleElevatorBrake::End() {}
+void FeedShooter::End() {
+  Robot::m_storage.SetSpeed(0, 0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ToggleElevatorBrake::Interrupted() {
+void FeedShooter::Interrupted() {
   End();
 }

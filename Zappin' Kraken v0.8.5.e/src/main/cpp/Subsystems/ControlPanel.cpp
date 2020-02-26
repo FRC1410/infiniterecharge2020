@@ -58,14 +58,10 @@ int ControlPanel::GetFMSData(int offset) {
   }
 }
 
-void ControlPanel::Raise() {
-  m_arm.Set(frc::DoubleSolenoid::kForward);
+void ControlPanel::SetPosition(frc::DoubleSolenoid::Value position) {
+  m_arm.Set(position);
 }
 
-void ControlPanel::Lower() {
-  m_arm.Set(frc::DoubleSolenoid::kReverse);
-}
-
-bool ControlPanel::GetPosition() {
-  return (m_arm.Get() == frc::DoubleSolenoid::kForward);
+frc::DoubleSolenoid::Value ControlPanel::GetPosition() {
+  return m_arm.Get();
 }

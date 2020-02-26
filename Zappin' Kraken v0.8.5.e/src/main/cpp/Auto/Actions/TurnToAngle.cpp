@@ -18,7 +18,7 @@ void TurnToAngle::Initialize() {
 }
 
 void TurnToAngle::Execute() {
-  Robot::m_drivetrain.SetCurvedArcadeSpeed(0, m_PID.GetPID(Robot::m_drivetrain.GetAngle(), target_angle, m_timer.Get() - previous_timer));
+  Robot::m_drivetrain.CurvedArcadeAccelerate(0, m_PID.GetPID(Robot::m_drivetrain.GetAngle(), target_angle, m_timer.Get() - previous_timer), m_timer.Get() - previous_timer);
   previous_timer = m_timer.Get();
 }
 

@@ -18,7 +18,7 @@ void RotationControl::Execute() {
   if (Robot::m_control_panel.GetColor() == (current_color + 1) % 4) {
     eighth_rotations++;
   } else if (Robot::m_control_panel.GetColor() == (current_color + 2) % 4) {
-    eighth_rotations+=2;
+    eighth_rotations += 2;
   } else if (Robot::m_control_panel.GetColor() == (current_color + 3) % 4) {
     eighth_rotations--;
   }

@@ -4,10 +4,10 @@
 ActuateControlPanel::ActuateControlPanel() {}
 
 void ActuateControlPanel::Initialize() {
-  if (Robot::m_control_panel.GetPosition() == false) {
-    Robot::m_control_panel.Raise();
+  if (Robot::m_control_panel.GetPosition() == frc::DoubleSolenoid::kForward) {
+    Robot::m_control_panel.SetPosition(frc::DoubleSolenoid::kReverse);
   } else {
-    Robot::m_control_panel.Lower();
+    Robot::m_control_panel.SetPosition(frc::DoubleSolenoid::kForward);
   }
 }
 

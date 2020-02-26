@@ -9,7 +9,6 @@ class LimelightDistancePID : public frc::Command {
     PID m_distance_PID;
     frc::Timer m_timer;
     double linear_speed, rotational_speed, previous_timer, target_distance;
-    int debounce_incrementer = 0;
 
   public:
     LimelightDistancePID();
@@ -19,5 +18,3 @@ class LimelightDistancePID : public frc::Command {
     void End() override;
     void Interrupted() override;
 };
-  
-   

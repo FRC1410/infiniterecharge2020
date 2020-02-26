@@ -15,15 +15,15 @@ Drivetrain::Drivetrain() : frc::Subsystem("Drivetrain") {
 	m_left_2.SetNeutralMode(NeutralMode::Brake);
 	m_right_2.SetNeutralMode(NeutralMode::Brake);
 
+  m_left_1.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, kPrimaryPID, kPIDTimeout);
+  m_right_1.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, kPrimaryPID, kPIDTimeout);
+  m_left_2.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, kPrimaryPID, kPIDTimeout);
+  m_right_2.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, kPrimaryPID, kPIDTimeout);
+
 	m_left_1.SetInverted(true);
 	m_right_1.SetInverted(true);
 	m_left_2.SetInverted(true);
 	m_right_2.SetInverted(true);
-
-	m_left_1.SetSensorPhase(false);
-	m_right_1.SetSensorPhase(true);
-	m_left_2.SetSensorPhase(false);
-	m_right_2.SetSensorPhase(true);
 }
 
 void Drivetrain::InitDefaultCommand() {
@@ -32,18 +32,20 @@ void Drivetrain::InitDefaultCommand() {
 
 void Drivetrain::SetRawSpeed(double left, double right) {
 	if (abs(left) > 1) {
-		left_speed = abs(left)/left;
+		left_speed = abs(left) / left;
 	} else {
 		left_speed = left;
 	}
 
 	if (abs(right) > 1) {
-		right_speed = abs(right)/right;
+		right_speed = abs(right) / right;
 	} else {
 		right_speed = right;
 	}
 
 	m_drive.TankDrive(kLeftDriveSpeedAdjustment * left_speed, kRightDriveSpeedAdjustment * right_speed);
+	frc::SmartDashboard::PutNumber("Left Power", kLeftDriveSpeedAdjustment * left_speed);
+	frc::SmartDashboard::PutNumber("Right Power", kRightDriveSpeedAdjustment * right_speed);
 }
 
 void Drivetrain::SetCurvedSpeed(double left, double right) {
@@ -99,21 +101,18 @@ double Drivetrain::ApplyAcceleration(double current_speed, double target_speed, 
 void Drivetrain::CurvedArcadeAccelerate(double speed, double rotational_speed, double time_difference) {
 	speed = ApplyAcceleration(GetLinearCurvedSpeed(), speed, kDrivetrainLinearAccelerationTime, time_difference);
 	rotational_speed = ApplyAcceleration(GetRotationalCurvedSpeed(), rotational_speed, kDrivetrainRotationalAccelerationTime, time_difference);
-	SetCurvedSpeed(speed, rotational_speed);
+	SetCurvedArcadeSpeed(speed, rotational_speed);
 }
 
 void Drivetrain::ResetEncoders() {
-  m_left_1.GetSensorCollection().SetIntegratedSensorPosition(0);
-  m_right_1.GetSensorCollection().SetIntegratedSensorPosition(0);
-  m_left_1.GetSensorCollection().SetIntegratedSensorPosition(0);
-  m_right_1.GetSensorCollection().SetIntegratedSensorPosition(0);
+	starting_distance += GetDistance();
   previous_distance = 0;
 }
 
 double Drivetrain::GetDistance() {
-  left_distance = (m_left_1.GetSensorCollection().GetIntegratedSensorPosition() + m_left_1.GetSensorCollection().GetIntegratedSensorPosition()) / 2;
-  right_distance = (m_right_1.GetSensorCollection().GetIntegratedSensorPosition() + m_right_2.GetSensorCollection().GetIntegratedSensorPosition()) / 2;
-  return (left_distance + right_distance) / 2;
+  left_distance = (m_left_1.GetSelectedSensorPosition() + m_left_2.GetSelectedSensorPosition()) / 2;
+  right_distance = -(m_right_1.GetSelectedSensorPosition() + m_right_2.GetSelectedSensorPosition()) / 2;
+  return (((kDrivetrainWheelDiameter * pi * kDrivetrainGearRatio) / kFalconTicksPerRevolution) * ((left_distance + right_distance) / 2)) - starting_distance;
 }
 
 void Drivetrain::ResetGyro(double angle_input) {
@@ -132,9 +131,18 @@ void Drivetrain::SetXZ(double x_input, double z_input) {
 }
 
 void Drivetrain::IncrementXZ() {
-  linear_displacement = 2 * (GetDistance() - previous_distance) * abs(sin((GetAngle() - starting_angle) * pi/180) / ((GetAngle() - starting_angle) * pi/180));
-  x_position += sin(GetAngle() * pi/180) * linear_displacement;
-  z_position += cos(GetAngle() * pi/180) * linear_displacement;
+	frc::SmartDashboard::PutNumber("ting ting", 3310);
+	if (GetAngle() - previous_angle == 0) {
+		linear_displacement = GetDistance() - previous_distance;
+	} else {
+  	linear_displacement = 2 * (GetDistance() - previous_distance) * abs(sin((GetAngle() - previous_angle) * pi/360.0) / ((GetAngle() - previous_angle) * pi/180.0));
+	}
+		//linear_displacement = GetDistance() - previous_distance;
+	frc::SmartDashboard::PutNumber("previous_distance", linear_displacement);
+  x_position += sin((GetAngle() + previous_angle) * pi/360.0) * linear_displacement;
+  z_position += cos((GetAngle() + previous_angle) * pi/360.0) * linear_displacement;
+	previous_distance = GetDistance();
+	previous_angle = GetAngle();
 }
 
 double Drivetrain::GetX() {

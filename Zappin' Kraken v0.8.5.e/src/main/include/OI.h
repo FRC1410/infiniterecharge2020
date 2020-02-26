@@ -4,7 +4,6 @@
 #include "Util/Controller.h"
 #include "RobotMap/IDs.h"
 
-
 class OI {
   private:
     Controller m_controller;
@@ -13,26 +12,19 @@ class OI {
     frc::JoystickButton LimelightAlignButton{&driver_controller, kLimelightAlignButton};
 
     frc::JoystickButton FlipDesiredIntakePositionButton{&operator_controller, kIntakeFlipperButton};
+    frc::JoystickButton IntakeMidPositionButton{&operator_controller, kIntakeLoadingStationButton};
     frc::JoystickButton ShootButton{&operator_controller, kShootButton};
+    frc::JoystickButton RunShooterButton{&operator_controller, kRunShooterButton};
+
+    frc::POVButton ElevatorRaiseButton{operator_controller, kElevatorRaisePOVAngle, kPOVNumber};
+    frc::POVButton ElevatorLowerButton{operator_controller, kElevatorLowerPOVAngle, kPOVNumber};
+    frc::JoystickButton ActuateElevatorLockButton{&operator_controller, kActuateElevatorLockButton};
+
     frc::JoystickButton ActuateControlPanelButton{&operator_controller, kActuateControlPanelButton};
     frc::JoystickButton RotationControlButton{&operator_controller, kRotationControlButton};
     frc::JoystickButton PositionControlPrimaryButton{&operator_controller, kPositionControlPrimaryButton};
     frc::JoystickButton PositionControlSecondaryButton{&operator_controller, kPositionControlSecondaryButton};
 
-<<<<<<< Updated upstream:Zappin' Kraken v0.7.7.e/src/main/include/OI.h
-    frc::POVButton ElevatorRaiseButton{operator_controller, kElevatorRaisePOVAngle, kPOVNumber};
-    frc::POVButton ElevatorLowerButton{operator_controller, kElevatorLowerPOVAngle, kPOVNumber};
-    frc::JoystickButton ElevatorBrakeButton{&operator_controller, kElevatorBrakeButton};
-
-    frc::JoystickButton ShooterTest{&driver_controller, 6};
-    frc::JoystickButton ShoveTest{&driver_controller, 5};
-
-    frc::JoystickButton LimelightTest{&driver_controller, 6};
-
-=======
-
-  
->>>>>>> Stashed changes:Zappin' Kraken v0.8.5.e/src/main/include/OI.h
   public:
     OI();
 

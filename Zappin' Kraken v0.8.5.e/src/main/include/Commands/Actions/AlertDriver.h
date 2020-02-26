@@ -2,13 +2,12 @@
 
 #include "Util/Libraries.h"
 
-class TimerDelay : public frc::Command {
+class AlertDriver : public frc::Command {
   private:
     frc::Timer m_timer;
-    double delay;
-    
+
   public:
-    TimerDelay(double input);
+    AlertDriver();
     void Initialize() override;
     void Execute() override;
     bool IsFinished() override;
