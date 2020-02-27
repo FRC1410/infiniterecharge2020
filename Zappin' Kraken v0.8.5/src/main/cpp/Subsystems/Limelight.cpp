@@ -15,11 +15,7 @@ void Limelight::ForceLightsOff() {
 }
 
 bool Limelight::GetTarget() {
-  if (limelight_table->GetNumber("tv", 0) == 0) {
-    return false;
-  } else {
-    return true;
-  }
+  return limelight_table->GetNumber("tv", 0);
 }
 
 double Limelight::GetXAngle() {

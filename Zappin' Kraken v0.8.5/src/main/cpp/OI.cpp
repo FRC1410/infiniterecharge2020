@@ -22,7 +22,7 @@ OI::OI() {
 
   FlipDesiredIntakePositionButton.WhenPressed(new FlipDesiredIntakePosition);
   ShootButton.WhileHeld(new Shoot);
-  RunShooterButton.ToggleWhenPressed(new RunShooter(kShooterRPMProfiles[1], 2.54));
+  RunShooterButton.ToggleWhenPressed(new RunShooter/*(kShooterRPMProfiles[1], 2.54)*/);
 
   ActuateElevatorLockButton.WhenPressed(new ActuateElevatorLock);
   ElevatorRaiseButton.WhenPressed(new ElevatorPID(kElevatorUpTarget));

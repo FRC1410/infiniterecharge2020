@@ -31,40 +31,43 @@ void DebouncedLimelightDistancePID::Initialize() {
 }
 
 void DebouncedLimelightDistancePID::Execute() {
-  kP = frc::SmartDashboard::GetNumber("Debounced ang kP", limelight_angle_kP);
-  kI = frc::SmartDashboard::GetNumber("Debounced ang kI", limelight_angle_kI);
-  kD = frc::SmartDashboard::GetNumber("Debounced ang kD", limelight_angle_kD);
-  
-  m_angle_PID.SetConstants(kP, kI, kD);
+  if (Robot::m_limelight.GetTarget() == true) {
+    kP = frc::SmartDashboard::GetNumber("Debounced ang kP", limelight_angle_kP);
+    kI = frc::SmartDashboard::GetNumber("Debounced ang kI", limelight_angle_kI);
+    kD = frc::SmartDashboard::GetNumber("Debounced ang kD", limelight_angle_kD);
+    
+    m_angle_PID.SetConstants(kP, kI, kD);
 
-  int distSum = 0;
-  int distUninitialized = 0;
-  for (int i = (sizeof(distHist)/kDoubleSize); i > 0; i--) {
-    distHist[i] = distHist[i - 1];
-  }
-  distHist[0] = Robot::m_limelight.GetDistance();
-
-  for (int j = 0; j < (sizeof(distHist)/kDoubleSize); j++) {
-    if (distHist[j] != 0) {
-      distSum += distHist[j];
-    } else {
-      distUninitialized++;
+    int distSum = 0;
+    int distUninitialized = 0;
+    for (int i = (sizeof(distHist)/kDoubleSize); i > 0; i--) {
+      distHist[i] = distHist[i - 1];
     }
+    distHist[0] = Robot::m_limelight.GetDistance();
+
+    for (int j = 0; j < (sizeof(distHist)/kDoubleSize); j++) {
+      if (distHist[j] != 0) {
+        distSum += distHist[j];
+      } else {
+        distUninitialized++;
+      }
+    }
+    avDist = distSum/((sizeof(distHist)/kDoubleSize) - distUninitialized);
+
+    frc::SmartDashboard::PutNumber("avDist", avDist);
+    
+    linear_speed = -m_distance_PID.GetPID(avDist, target_distance, m_timer.Get() - previous_timer);
+    rotational_speed = -m_angle_PID.GetPID(Robot::m_limelight.GetXAngle(), -kLimelightAngleOffset, m_timer.Get() - previous_timer);
+
+    if (abs(linear_speed) > kLimelightLinearCap) {
+      linear_speed = kLimelightLinearCap * (abs(linear_speed) / linear_speed);
+    }
+
+    Robot::m_drivetrain.SetCurvedArcadeSpeed(linear_speed, rotational_speed);
+    previous_timer = m_timer.Get();
+  } else {
+    Robot::m_drivetrain.SetRawSpeed(0, 0);
   }
-  avDist = distSum/((sizeof(distHist)/kDoubleSize) - distUninitialized);
-
-  frc::SmartDashboard::PutNumber("avDist", avDist);
-  
-  linear_speed = -m_distance_PID.GetPID(avDist, target_distance, m_timer.Get() - previous_timer);
-  rotational_speed = -m_angle_PID.GetPID(Robot::m_limelight.GetXAngle(), -kLimelightAngleOffset, m_timer.Get() - previous_timer);
-
-  if (abs(linear_speed) > kLimelightLinearCap) {
-    linear_speed = kLimelightLinearCap * (abs(linear_speed) / linear_speed);
-  }
-
-  Robot::m_drivetrain.SetCurvedArcadeSpeed(linear_speed, rotational_speed);
-  previous_timer = m_timer.Get();
-
   if ((abs(avDist - target_distance) < kDistanceFinishedThreshold) && abs(Robot::m_limelight.GetXAngle() + kLimelightAngleOffset) < kLimelightAngleFinishedThreshold) {
     m_finished_timer.Start();
   } else {

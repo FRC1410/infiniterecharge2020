@@ -33,6 +33,6 @@ void Shooter::SetPIDSpeed(double target_RPM) {
 }
 
 double Shooter::GetRPM() {
-  frc::SmartDashboard::PutNumber("Shooter Falon RPM Ticks", m_shooter.GetSelectedSensorVelocity(0));
+  frc::SmartDashboard::PutNumber("Shooter Falon RPM", m_shooter.GetSelectedSensorVelocity(0) * 600 / 2048);
   return -m_shooter.GetSensorCollection().GetIntegratedSensorVelocity() * kFalconTicksToRPM;
 }

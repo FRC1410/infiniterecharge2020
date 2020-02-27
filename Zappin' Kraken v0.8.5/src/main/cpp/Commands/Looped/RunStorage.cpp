@@ -13,6 +13,10 @@ void RunStorage::Initialize() {
   m_timer.Reset();
   m_timer.Start();
   disabled_was_pressed = (Robot::m_oi.GetOperatorDPad() == 270);
+  Robot::m_storage.SetBallCount(0);
+
+  m_measure_timer.Reset();
+  m_measure_timer.Stop();
 }
 
 void RunStorage::Execute() {
@@ -26,7 +30,18 @@ void RunStorage::Execute() {
   }
 
 
-  if (Robot::m_storage.GetManualControl() == false/* && Robot::m_storage.GetPhotoelectricSensor2() == false*/) {
+  if (Robot::m_storage.GetPhotoelectricSensor() == true && sensor_was_read == false) {
+    m_measure_timer.Reset();
+    m_measure_timer.Start();
+  }
+
+  if (Robot::m_storage.GetPhotoelectricSensor() == false) {
+    m_measure_timer.Stop();
+  }
+
+  frc::SmartDashboard::PutNumber("Sensor Interval", m_measure_timer.Get());
+
+  if (Robot::m_storage.GetManualControl() == false && Robot::m_storage.GetBallCount() < 3/* && Robot::m_storage.GetPhotoelectricSensor2() == false*/) {
     if (Robot::m_storage.GetPhotoelectricSensor() == true) {
       if (sensor_was_read == false) {
         Robot::m_storage.SetVerticalSpeed(kStorageVerticalSpeed);
@@ -34,8 +49,8 @@ void RunStorage::Execute() {
       sensor_was_read = true;
       m_timer.Reset();
     } else {
-      follow_through = true;
       if (sensor_was_read == true) {
+        follow_through = true;
         m_timer.Reset();
       }
       sensor_was_read = false;
@@ -51,7 +66,15 @@ void RunStorage::Execute() {
     Robot::m_storage.IncrementBallCount();
   }
 
-  Robot::m_storage.SetHorizontalSpeed(kStorageHorizontalSpeed * Robot::m_oi.GetOperatorAxis(kOuttakeAxis));
+  if (Robot::m_storage.GetBallCount() > 3) {
+    Robot::m_storage.SetHorizontalSpeed(0);
+  } else {
+    if (Robot::m_storage.GetPhotoelectricSensor() == true && Robot::m_storage.GetBallCount() == 3) {
+      Robot::m_storage.IncrementBallCount();
+    } else {
+      Robot::m_storage.SetHorizontalSpeed(kStorageHorizontalSpeed * Robot::m_oi.GetOperatorAxis(kOuttakeAxis));
+    }
+  }
 }
 
 bool RunStorage::IsFinished() {
