@@ -1,0 +1,56 @@
+See file:///C:/Users/randy/Documents/Visual%20Studio%20Code/2020%20Infinite%20Recharge/Zappin'%20Kraken%20v1.0.3/build/tmp/compileFrcUserProgramDebugExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramDebugExecutableFrcUserProgramCpp.
+compiling IntakeBalls.cpp successful.
+
+compiling TimerDelay.cpp successful.
+
+compiling DriveToDistance.cpp successful.
+
+compiling ActivateCamera.cpp successful.
+
+compiling AlertDriver.cpp successful.
+
+compiling DriveToPoint.cpp successful.
+
+compiling LimelightDistancePID.cpp successful.
+
+compiling TurnToAngle.cpp successful.
+
+compiling PositionControl.cpp successful.
+
+compiling ResetPosition.cpp successful.
+
+compiling LimelightAnglePID.cpp successful.
+
+compiling ShooterPID.cpp successful.
+
+compiling SmoothLimelightDistancePID.cpp successful.
+
+compiling SetDesiredIntakePosition.cpp successful.
+
+compiling Shoot.cpp successful.
+
+compiling DisplayFeedback.cpp successful.
+
+compiling RunIntake.cpp successful.
+
+compiling RunSlider.cpp successful.
+
+compiling FlipIntake.cpp successful.
+
+compiling RunElevator.cpp successful.
+
+compiling Drive.cpp successful.
+
+compiling RunStorage.cpp successful.
+
+compiling OI.cpp successful.
+
+compiling Feedback.cpp successful.
+
+compiling RotationControl.cpp successful.
+
+compiling RaiseElevator.cpp successful.
+
+compiling Robot.cpp successful.
+
+Finished compileFrcUserProgramDebugExecutableFrcUserProgramCpp, see full log file:///C:/Users/randy/Documents/Visual%20Studio%20Code/2020%20Infinite%20Recharge/Zappin'%20Kraken%20v1.0.3/build/tmp/compileFrcUserProgramDebugExecutableFrcUserProgramCpp/output.txt.

@@ -1,0 +1,9 @@
+[
+  {
+    "artifact": "frcCpp (in project Limelight Distance - tShort)",
+    "target": "roborio",
+    "component": "frcUserProgram",
+    "debugfile": "frcCpp_roborio.debugconfig",
+    "language": "cpp"
+  }
+]
