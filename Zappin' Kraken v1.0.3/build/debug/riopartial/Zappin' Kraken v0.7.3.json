@@ -1,9 +1,0 @@
-[
-  {
-    "artifact": "frcCpp (in project Zappin\u0027 Kraken v0.7.3)",
-    "target": "roborio",
-    "component": "frcUserProgram",
-    "debugfile": "frcCpp_roborio.debugconfig",
-    "language": "cpp"
-  }
-]
