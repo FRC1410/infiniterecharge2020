@@ -58,7 +58,7 @@ constexpr double kStoragePhotoelectricDelay = 0.2;              //Seconds
 constexpr double kAccelerationTime = 0.254;                     //Seconds
 
 constexpr double kShooterDistanceProfiles[] = {126, 180, 254, 408};
-constexpr double kShooterRPMProfiles[] = {3260, 3250, 3700, 4520}; //4465
+constexpr double kShooterRPMProfiles[] = {3260, 3300, 3700, 4520}; //4465
 constexpr double kShooterAngleOffsets[] = {1, 1, 1, 1};
 
 constexpr double shooter_kP = 0.3;
